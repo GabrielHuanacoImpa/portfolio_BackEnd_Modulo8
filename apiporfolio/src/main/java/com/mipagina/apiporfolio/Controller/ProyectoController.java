@@ -4,11 +4,13 @@
  */
 package com.mipagina.apiporfolio.Controller;
 
+import static com.mipagina.apiporfolio.ApiporfolioApplication.URL_FROND_END;
 import com.mipagina.apiporfolio.Model.Proyecto;
 import com.mipagina.apiporfolio.service.IProyectoService;
 import java.sql.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author GHI
  */
+@CrossOrigin(origins = URL_FROND_END)
 
 @RestController
 public class ProyectoController {

@@ -52,4 +52,6 @@ public class Persona {
     private String ocupacion;
     //@Column
     private String nacionalidad;
+    private String direccion_fondo;
+    private String nombre_fondo;
 }
