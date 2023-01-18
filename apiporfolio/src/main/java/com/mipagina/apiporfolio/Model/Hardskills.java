@@ -22,8 +22,8 @@ public class Hardskills {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
-    private String habilidad;
-    private int nivel;
+    private String habilidadH;
+    private int nivelH;
     private int persona_id;
     
 }

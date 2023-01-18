@@ -36,58 +36,41 @@ public class ProyectoController {
     }
     
         @PostMapping ("/proyecto/crear")
-    public String createStudent(@RequestBody Proyecto pro){
+    public Proyecto createStudent(@RequestBody Proyecto pro){
         interProyecto.saveProyecto(pro);
         //devuelve un string avisando si creo correctamente
-        return "La Proyecto fue creada correctamente";
-    }
-    
-    @DeleteMapping ("/proyecto/borrar/{id}")
-    public String deleteProyecto (@PathVariable Long id){
-        interProyecto.deleteProyecto(id);
-        //devuelve un string avisando si elimino correctamente
-        return "La Proyecto fue eliminada correctamente";
-    }
-    
-    @PutMapping ("/proyecto/editar/{id}")
-    public Proyecto editProyecto (@PathVariable Long id,
-                                @RequestParam ("nombre_proyecto") String nuevoNombre_proyecto,
-                                @RequestParam ("fecha_inicio") Date nuevoFecha_inicio,
-                                @RequestParam ("fecha_fin") Date nuevoFecha_fin,
-                                @RequestParam ("descripcion") String nuevoDescripcion,
-                                @RequestParam ("link") String nuevoLlink,
-                                @RequestParam ("url_imagenes") String nuevoUrl_imagenes,
-                                @RequestParam ("domicilio") String nuevoDomicilio,
-
-                                @RequestParam ("tipo_ocupacion") String nuevoTipo_ocupacion,
-                                @RequestParam ("ultima_actualizacion") Date nuevoUltima_actualizacion,
-                                @RequestParam ("url_image_logo") String nuevoUrl_image_logo,
-                                @RequestParam ("reminder") int nuevoReminder,
-                                @RequestParam ("persona_id") int nuevoPersona_id) {
-        //busco la Proyecto en cuestion
-        Proyecto pro = interProyecto.findProyecto(id);
-        
-        //esto puede ir en service
-        // para desacoplar mejor aun el codigo en un nuevo metodo
-        pro.setNombre_proyecto(nuevoNombre_proyecto);
-        pro.setFecha_inicio(nuevoFecha_inicio);
-        pro.setFecha_fin(nuevoFecha_fin);
-        pro.setDescripcion(nuevoDescripcion);
-        pro.setLink(nuevoLlink);
-        pro.setUrl_imagenes(nuevoUrl_imagenes);
-
-        pro.setDomicilio(nuevoDomicilio);
-        pro.setTipo_ocupacion(nuevoTipo_ocupacion);
-        
-        pro.setUltima_actualizacion(nuevoUltima_actualizacion);
-        pro.setUrl_image_logo(nuevoUrl_image_logo);
-        pro.setReminder(nuevoReminder);
-        pro.setPersona_id(nuevoPersona_id);
-        
-        interProyecto.saveProyecto(pro);
-        //retorna la nueva Proyecto
+        //return "La Proyecto fue creada correctamente";
         return pro;
     }
     
+    @DeleteMapping ("/proyecto/borrar/{id}")
+    public Long deleteProyecto (@PathVariable Long id){
+        interProyecto.deleteProyecto(id);
+        //devuelve un string avisando si elimino correctamente
+        //return "La Proyecto fue eliminada correctamente";
+        return id;
+    }
+
+    @PutMapping ("/proyecto/editar/{id}")
+    public Proyecto editProyecto (@PathVariable Long id, @RequestBody Proyecto dato){
+        Proyecto pro = interProyecto.findProyecto(id);
+        
+        pro.setNombre_proyecto(dato.getNombre_proyecto());
+        pro.setFecha_inicioP(dato.getFecha_inicioP());
+        pro.setFecha_finP(dato.getFecha_finP());
+        pro.setDescripcionP(dato.getDescripcionP());
+        pro.setLink(dato.getLink());
+        pro.setUrl_imagenes(dato.getUrl_imagenes());
+        pro.setDomicilio(dato.getDomicilio());
+        pro.setTipo_ocupacion(dato.getTipo_ocupacion());
+        pro.setUltima_actualizacion(dato.getUltima_actualizacion());
+        pro.setUrl_image_logo(dato.getUrl_image_logo());
+        pro.setReminder(dato.getReminder());
+        pro.setPersona_id(dato.getPersona_id());
+
+        
+        interProyecto.saveProyecto(pro);
+        return pro;
+    }
         
 }

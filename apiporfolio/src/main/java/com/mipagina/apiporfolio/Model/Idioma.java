@@ -22,7 +22,7 @@ public class Idioma {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
-    private String habilidad;
-    private int nivel;
+    private String habilidadI;
+    private int nivelI;
     private int persona_id;
 }

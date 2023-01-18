@@ -17,7 +17,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+//import org.springframework.web.bind.annotation.RequestMapping;
+//import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 /**
  *
@@ -35,54 +36,42 @@ public class ExperienciaController {
         return interExperiencia.getExperiencia();
     }
     
-        @PostMapping ("/experiencia/crear")
-    public String createStudent(@RequestBody Experiencia exp){
+    @PostMapping ("/experiencia/crear")
+    //@PostMapping ("crear")
+    public Experiencia createStudent(@RequestBody Experiencia exp){
         interExperiencia.saveExperiencia(exp);
         //devuelve un string avisando si creo correctamente
-        return "La Experiencia fue creada correctamente";
-    }
-    
-    @DeleteMapping ("/experiencia/borrar/{id}")
-    public String deleteExperiencia (@PathVariable Long id){
-        interExperiencia.deleteExperiencia(id);
-        //devuelve un string avisando si elimino correctamente
-        return "La Experiencia fue eliminada correctamente";
-    }
-    
-    @PutMapping ("/experiencia/editar/{id}")
-    public Experiencia editExperiencia (@PathVariable Long id,
-                                @RequestParam ("nombre_empresa") String nuevoNombreEmpresa,
-                                @RequestParam ("es_trabajo_actual") int nuevoEsTrabajoActual,
-                                @RequestParam ("descripcion") String nuevoDescripcion,
-                                @RequestParam ("tipo") String nuevoTipo,
-                                @RequestParam ("fecha_inicio") Date nuevoFechaInicio,
-                                @RequestParam ("fecha_fin") Date nuevoFechaFin,
-                                @RequestParam ("lugar") String nuevoLugar,
-                                @RequestParam ("fecha_ultima_actualizacion") Date nuevoFecha_ultima_actualizacion,
-                                @RequestParam ("image_logo") String nuevoImage_logo,
-                                @RequestParam ("reminder") int nuevoReminder,
-                                @RequestParam ("persona_id") int nuevoPersona_id) {
-        //busco la Experiencia en cuestion
-        Experiencia exp = interExperiencia.findExperiencia(id);
-        
-        //esto puede ir en service
-        // para desacoplar mejor aun el codigo en un nuevo metodo
-        exp.setNombre_empresa(nuevoNombreEmpresa);
-        exp.setEs_trabajo_actual(nuevoEsTrabajoActual);
-        exp.setDescripcion(nuevoDescripcion);
-        exp.setTipo(nuevoTipo);
-        exp.setFecha_inicio(nuevoFechaInicio);
-        exp.setFecha_fin(nuevoFechaFin);
-        exp.setLugar(nuevoLugar);
-        exp.setFecha_ultima_actualizacion(nuevoFecha_ultima_actualizacion);
-        exp.setImage_logo(nuevoImage_logo);
-        exp.setReminder(nuevoReminder);
-        exp.setPersona_id(nuevoPersona_id);
-        
-        interExperiencia.saveExperiencia(exp);
-        //retorna la nueva Experiencia
+        //return "La Experiencia fue creada correctamente";
         return exp;
     }
     
+    @DeleteMapping ("/experiencia/borrar/{id}")
+    public Long deleteExperiencia (@PathVariable Long id){
+        interExperiencia.deleteExperiencia(id);
+        //devuelve un string avisando si elimino correctamente
+        //return "La Experiencia fue eliminada correctamente";
+        return id;
+    }
+   
+    @PutMapping ("/experiencia/editar/{id}")
+    public Experiencia editExperiencia(@PathVariable Long id, @RequestBody Experiencia dato){
+        
+      Experiencia exp = interExperiencia.findExperiencia(id);
+        exp.setNombre_empresa(dato.getNombre_empresa());
+        exp.setEs_trabajo_actual(dato.getEs_trabajo_actual());
+        exp.setDescripcion(dato.getDescripcion());
+        exp.setTipo(dato.getTipo());
+        exp.setFecha_inicio(dato.getFecha_inicio());
+        exp.setFecha_fin(dato.getFecha_fin());
+        exp.setLugar(dato.getLugar());
+        exp.setFecha_ultima_actualizacion(dato.getFecha_ultima_actualizacion());
+        exp.setImage_logo(dato.getImage_logo());
+        exp.setReminder(dato.getReminder());
+        exp.setPersona_id(dato.getPersona_id());
+
+        interExperiencia.saveExperiencia(exp);
+        
+        return exp;
+    }
       
 }

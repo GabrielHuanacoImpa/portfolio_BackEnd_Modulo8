@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 /**
@@ -25,31 +26,45 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @CrossOrigin(origins = URL_FROND_END)
 
+//@CrossOrigin(maxAge = 3600)
+//@RequestMapping("educacion")
 @RestController
 public class EducacionController {
       @Autowired
     private IEducacionService interEducacion;
     
     @GetMapping ("/educacion/traer")
+     // @GetMapping ("traer")
     public List<Educacion> getEducacion() {
         return interEducacion.getEducacion();
     }
-    
+    //@CrossOrigin(origins = URL_FROND_END)
+    //@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "Requestor-Type")
         @PostMapping ("/educacion/crear")
-    public String createStudent(@RequestBody Educacion edu){
+    //@PostMapping ("crear")
+    public Educacion createStudent(@RequestBody Educacion edu){
         interEducacion.saveEducacion(edu);
         //devuelve un string avisando si creo correctamente
-        return "La Educacion fue creada correctamente";
+        //return "La Educacion fue creada correctamente";
+        return edu;
     }
-    
+    /*
     @DeleteMapping ("/educacion/borrar/{id}")
     public String deleteEducacion (@PathVariable Long id){
         interEducacion.deleteEducacion(id);
         //devuelve un string avisando si elimino correctamente
         return "La Educacion fue eliminada correctamente";
     }
+*/
+        @DeleteMapping ("/educacion/borrar/{id}")
+    public Long deleteEducacion (@PathVariable Long id){
+        interEducacion.deleteEducacion(id);
+        //devuelve un string avisando si elimino correctamente
+        return id;
+    }
     
-    @PutMapping ("/educacion/editar/{id}")
+   
+    /*
     public Educacion editEducacion (@PathVariable Long id,
                                 @RequestParam ("institucion") String nuevoInstitucion,
                                 @RequestParam ("titulo") String nuevoTitulo,
@@ -79,6 +94,27 @@ public class EducacionController {
         //retorna la nueva Educacion
         return edu;
     }
-    
+*/
+@PutMapping ("/educacion/editar/{id}")
+    public Educacion editEducacion(@PathVariable Long id, @RequestBody Educacion dato){
+        
+      Educacion edu = interEducacion.findEducacion(id);
+        edu.setInstitucion(dato.getInstitucion());
+
+        edu.setTitulo(dato.getTitulo());
+        edu.setDomicilio(dato.getDomicilio());
+
+        edu.setFecha_inicio(dato.getFecha_inicio());
+        edu.setFecha_fin(dato.getFecha_fin());
+
+        edu.setImage_institucion(dato.getImage_institucion());
+        edu.setUltima_actualizacion(dato.getUltima_actualizacion());
+        edu.setReminder(dato.getReminder());
+        edu.setPersona_id(dato.getPersona_id());
+        
+        interEducacion.saveEducacion(edu);
+        
+        return edu;
+    }
         
 }

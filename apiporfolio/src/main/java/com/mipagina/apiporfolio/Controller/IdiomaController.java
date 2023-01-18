@@ -36,37 +36,31 @@ public class IdiomaController {
     }
     
         @PostMapping ("/idioma/crear")
-    public String createStudent(@RequestBody Idioma idio){
+    public Idioma createStudent(@RequestBody Idioma idio){
         interIdioma.saveIdioma(idio);
         //devuelve un string avisando si creo correctamente
-        return "La Idioma fue creada correctamente";
-    }
-    
-    @DeleteMapping ("/idioma/borrar/{id}")
-    public String deleteIdioma (@PathVariable Long id){
-        interIdioma.deleteIdioma(id);
-        //devuelve un string avisando si elimino correctamente
-        return "La Idioma fue eliminada correctamente";
-    }
-    
-    @PutMapping ("/idioma/editar/{id}")
-    public Idioma editIdioma (@PathVariable Long id,
-                                @RequestParam ("habilidad") String nuevoHabilidad,
-                                @RequestParam ("nivel") int nuevoNivel,
-                                @RequestParam ("persona_id") int nuevoPersona_id) {
-        //busco la Idioma en cuestion
-        Idioma idio = interIdioma.findIdioma(id);
-        
-        //esto puede ir en service
-        // para desacoplar mejor aun el codigo en un nuevo metodo
-        idio.setHabilidad(nuevoHabilidad);
-        idio.setNivel(nuevoNivel);
-        idio.setPersona_id(nuevoPersona_id);
-        
-        interIdioma.saveIdioma(idio);
-        //retorna la nueva Idioma
+        //return "La Idioma fue creada correctamente";
         return idio;
     }
     
-    
+    @DeleteMapping ("/idioma/borrar/{id}")
+    public Long deleteIdioma (@PathVariable Long id){
+        interIdioma.deleteIdioma(id);
+        //devuelve un string avisando si elimino correctamente
+        //return "La Idioma fue eliminada correctamente";
+        return id;
+    }
+
+    @PutMapping ("/idioma/editar/{id}")
+    public Idioma editIdioma (@PathVariable Long id, @RequestBody Idioma dato){
+        Idioma idio = interIdioma.findIdioma(id);
+        
+        //idio.setId(dato.getId());
+        idio.setHabilidadI(dato.getHabilidadI());
+        idio.setNivelI(dato.getNivelI());
+        idio.setPersona_id(dato.getPersona_id());
+        
+        interIdioma.saveIdioma(idio);
+        return idio;
+    }
 }

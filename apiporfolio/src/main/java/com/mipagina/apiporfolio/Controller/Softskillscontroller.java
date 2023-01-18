@@ -37,32 +37,32 @@ public class Softskillscontroller {
     }
     
         @PostMapping ("/softskills/crear")
-    public String createStudent(@RequestBody Softskills soft){
+    public Softskills createStudent(@RequestBody Softskills soft){
         interSoftskills.saveSoftskills(soft);
         //devuelve un string avisando si creo correctamente
-        return "La Softskills fue creada correctamente";
+        //return "La Softskills fue creada correctamente";
+        return soft;
     }
     
     @DeleteMapping ("/softskills/borrar/{id}")
-    public String deleteSoftskills (@PathVariable Long id){
+    public Long deleteSoftskills (@PathVariable Long id){
         interSoftskills.deleteSoftskills(id);
         //devuelve un string avisando si elimino correctamente
-        return "La Softskills fue eliminada correctamente";
+        //return "La Softskills fue eliminada correctamente";
+        return id;
     }
     
     @PutMapping ("/softskills/editar/{id}")
-    public Softskills editSoftskills (@PathVariable Long id,
-                                @RequestParam ("habilidad") String nuevoHabilidad,
-                                @RequestParam ("nivel") int nuevoNivel,
-                                @RequestParam ("persona_id") int nuevoPersona_id) {
+    public Softskills editSoftskills (@PathVariable Long id,@RequestBody Softskills dato) {
         //busco la Softskills en cuestion
         Softskills soft = interSoftskills.findSoftskills(id);
         
         //esto puede ir en service
         // para desacoplar mejor aun el codigo en un nuevo metodo
-        soft.setHabilidad(nuevoHabilidad);
-        soft.setNivel(nuevoNivel);
-        soft.setPersona_id(nuevoPersona_id);
+        //soft.setId(dato.getId());
+        soft.setHabilidad(dato.getHabilidad());
+        soft.setNivel(dato.getNivel());
+        soft.setPersona_id(dato.getPersona_id());
         
         interSoftskills.saveSoftskills(soft);
         //retorna la nueva Softskills

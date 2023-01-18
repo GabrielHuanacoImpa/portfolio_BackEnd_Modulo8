@@ -23,9 +23,9 @@ public class Proyecto {
     private int id;
     
     private String nombre_proyecto;
-    private Date fecha_inicio;
-    private Date fecha_fin;
-    private String descripcion;
+    private Date fecha_inicioP;
+    private Date fecha_finP;
+    private String descripcionP;
     private String link;
     private String url_imagenes;
     private String domicilio;

@@ -37,32 +37,31 @@ public class HardskillsController {
     }
     
         @PostMapping ("/hardskills/crear")
-    public String createStudent(@RequestBody Hardskills hard){
+    public Hardskills createStudent(@RequestBody Hardskills hard){
         interHardskills.saveHardskills(hard);
         //devuelve un string avisando si creo correctamente
-        return "La Hardskills fue creada correctamente";
+        //return "La Hardskills fue creada correctamente"
+        return hard;
     }
     
     @DeleteMapping ("/hardskills/borrar/{id}")
-    public String deleteHardskills (@PathVariable Long id){
+    public Long deleteHardskills (@PathVariable Long id){
         interHardskills.deleteHardskills(id);
         //devuelve un string avisando si elimino correctamente
-        return "La Hardskills fue eliminada correctamente";
+        //return "La Hardskills fue eliminada correctamente";
+        return id;
     }
     
     @PutMapping ("/hardskills/editar/{id}")
-    public Hardskills editHardskills (@PathVariable Long id,
-                                @RequestParam ("habilidad") String nuevoHabilidad,
-                                @RequestParam ("nivel") int nuevoNivel,
-                                @RequestParam ("persona_id") int nuevoPersona_id) {
+    public Hardskills editHardskills (@PathVariable Long id,@RequestBody Hardskills dato) {
         //busco la Hardskills en cuestion
         Hardskills hard = interHardskills.findHardskills(id);
         
         //esto puede ir en service
         // para desacoplar mejor aun el codigo en un nuevo metodo
-        hard.setHabilidad(nuevoHabilidad);
-        hard.setNivel(nuevoNivel);
-        hard.setPersona_id(nuevoPersona_id);
+        hard.setHabilidadH(dato.getHabilidadH());
+        hard.setNivelH(dato.getNivelH());
+        hard.setPersona_id(dato.getPersona_id());
         
         interHardskills.saveHardskills(hard);
         //retorna la nueva Hardskills
